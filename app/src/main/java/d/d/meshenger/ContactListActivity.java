@@ -310,14 +310,9 @@ public class ContactListActivity extends MeshengerActivity implements ServiceCon
 
     private void shareContact(Contact c) {
         try {
-            JSONObject object = new JSONObject();
-            object.put("username", c.getName());
-            object.put("address", c.getAddress());
-            object.put("identifier", c.getIdentifier());
-
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, object.toString());
+            intent.putExtra(Intent.EXTRA_TEXT, Contact.exportJSON(c));
             startActivity(intent);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -75,7 +75,7 @@ public class RTCCall implements DataChannel.Observer {
     }
 
     private RTCCall(Contact target, String username, String identifier, OnStateChangeListener listener, Context context) {
-        log("starting call to " + target.getAddress());
+        log("starting call to " + target.getName());
         initRTC(context);
         this.context = context;
         context.setTheme(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
@@ -90,7 +90,7 @@ public class RTCCall implements DataChannel.Observer {
                     if (iceGatheringState == PeerConnection.IceGatheringState.COMPLETE) {
                         log("transferring offer...");
                         try {
-                            commSocket = new Socket(target.getAddress().replace("%zone", "%wlan0"), MainService.serverPort);
+                            commSocket = target.createSocket();
                             OutputStream os = commSocket.getOutputStream();
                             reportStateChange(CallState.CONNECTING);
                             JSONObject object = new JSONObject();

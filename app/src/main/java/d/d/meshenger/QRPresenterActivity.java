@@ -106,11 +106,7 @@ public class QRPresenterActivity extends MeshengerActivity implements ServiceCon
         JSONObject object = new JSONObject();
 
         if(this.contact != null){
-            object.put("address", contact.getAddress());
-            object.put("identifier", contact.getIdentifier());
-            object.put("username", contact.getName());
-            object.put("challenge", this.binder.generateChallenge());
-            return object.toString();
+            return Contact.exportJSON(this.contact);
         }
 
         SharedPreferences prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
@@ -123,7 +119,7 @@ public class QRPresenterActivity extends MeshengerActivity implements ServiceCon
         object.put("address", address);
         object.put("challenge", this.binder.generateChallenge());
         object.put("identifier", Utils.formatAddress(Utils.getMacAddress()));
-
+Log.i("export", "json: " + object.toString());
         return object.toString();
     }
 
